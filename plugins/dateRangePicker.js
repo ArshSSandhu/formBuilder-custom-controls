@@ -13,3 +13,27 @@ export default function dateRangePlugin(controlMap) {
           }
         };
       }
+
+      build() {
+        const start = this.markup('input', null, {
+          type: 'date',
+          name: this.name + '-start',
+          class: 'date-start'
+        });
+  
+        const end = this.markup('input', null, {
+          type: 'date',
+          name: this.name + '-end',
+          class: 'date-end'
+        });
+  
+        const wrapper = this.markup('div', [start, ' to ', end], {
+          className: 'date-range-wrapper'
+        });
+  
+        this.field = wrapper; 
+        return {
+          field: wrapper,
+          layout: 'noLabel'
+        };
+      }
