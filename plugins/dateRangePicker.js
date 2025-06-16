@@ -63,3 +63,20 @@ export default function dateRangePlugin(controlMap) {
         this.field = wrapper; 
         return wrapper;
       }
+
+      value() {
+    
+        const wrapper = this.field || this.element;
+        const start = wrapper.querySelector('.date-start')?.value || '';
+        const end = wrapper.querySelector('.date-end')?.value || '';
+        return `${start} to ${end}`;
+      }
+  
+      onRender() {
+        console.log('📆 Date Range Picker rendered!');
+      }
+    }
+  
+    base.register('dateRange', DateRangeControl);
+    return DateRangeControl;
+  }
