@@ -37,3 +37,29 @@ export default function dateRangePlugin(controlMap) {
           layout: 'noLabel'
         };
       }
+
+      input(value) {
+        
+        const [startVal, endVal] = (value || '').split(' to ');
+  
+        const start = this.markup('input', null, {
+          type: 'date',
+          name: this.name + '-start',
+          class: 'date-start',
+          value: startVal || ''
+        });
+  
+        const end = this.markup('input', null, {
+          type: 'date',
+          name: this.name + '-end',
+          class: 'date-end',
+          value: endVal || ''
+        });
+  
+        const wrapper = this.markup('div', [start, ' to ', end], {
+          className: 'date-range-wrapper'
+        });
+  
+        this.field = wrapper; 
+        return wrapper;
+      }
