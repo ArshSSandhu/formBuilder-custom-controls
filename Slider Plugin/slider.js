@@ -1,3 +1,9 @@
+/**
+ * Slider Plugin for formBuilder
+ * Author: Arshpreet Singh Sandhu
+ * License: MIT
+ */
+
 export default function sliderPlugin(controlMap) {
     const base = controlMap.text;
   

@@ -1,3 +1,9 @@
+/**
+ * Date Range Picker Plugin for formBuilder
+ * Author: Arshpreet Singh Sandhu
+ * License: MIT
+ */
+
 export default function dateRangePlugin(controlMap) {
     const base = controlMap.text;
   
