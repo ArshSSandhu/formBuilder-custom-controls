@@ -1,12 +1,13 @@
 "use strict";
 
 /**
- * Password Strength Meter Plugin for formBuilder
+ * Password Strength Meter Plugin for formBuilder 
  * Author: Arshpreet Singh Sandhu
  * License: MIT
  */
 
 if (!window.fbControls) window.fbControls = [];
+
 window.fbControls.push(function(controlClass) {
     class controlPasswordStrength extends controlClass {
         static get definition() {
@@ -32,24 +33,48 @@ window.fbControls.push(function(controlClass) {
             const input = this.markup("input", null, {
                 type: "password",
                 className: "form-control password-input",
-                placeholder: this.config.placeholder || "Enter password"
+                placeholder: this.config.placeholder || "Enter password",
+                style: "width: 250px; height: 38px; padding: 6px; font-size: 14px;"
             });
 
             const meter = this.markup("div", null, {
-                className: "password-strength-meter mt-2",
-                style: "height: 8px; background: #ddd;"
+                className: "password-strength-meter",
+                style: `
+                    height: 10px;
+                    width: 250px;
+                    background: #eee;
+                    border-radius: 5px;
+                    margin-top: 6px;
+                    overflow: hidden;
+                `
             });
 
-            this.input = input;
-            this.meter = meter;
+            const meterBar = this.markup("div", null, {
+                className: "password-strength-bar",
+                style: `
+                    height: 100%;
+                    width: 0%;
+                    background: #ddd;
+                    transition: width 0.3s ease, background 0.3s ease;
+                `
+            });
 
-            this.dom = this.markup("div", [input, meter]);
-            return this.dom;
+            meter.appendChild(meterBar);
+
+            this.input = input;
+            this.meterBar = meterBar;
+
+            const container = this.markup("div", [input, meter], {
+                style: "display: flex; flex-direction: column; align-items: flex-start;"
+            });
+
+            this.dom = container;
+            return container;
         }
 
         onRender() {
             const input = $(this.input);
-            const meter = $(this.meter);
+            const bar = $(this.meterBar);
             const minLength = parseInt(this.config.minLength || 6);
 
             input.on("input", function() {
@@ -63,12 +88,14 @@ window.fbControls.push(function(controlClass) {
                 if (/[^a-zA-Z0-9]/.test(val)) score++;
 
                 const percent = (score / 5) * 100;
-                let color = "#ddd";
-                if (percent >= 80) color = "green";
-                else if (percent >= 60) color = "orange";
-                else if (percent >= 40) color = "red";
 
-                meter.css({
+                let color = "#ddd";
+                if (percent >= 80) color = "#4CAF50";       
+                else if (percent >= 60) color = "#FFA500";   
+                else if (percent >= 40) color = "#FF6347";   
+                else color = "#ddd";
+
+                bar.css({
                     "width": percent + "%",
                     "background": color
                 });
