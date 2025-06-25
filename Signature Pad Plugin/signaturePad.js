@@ -26,13 +26,33 @@ window.fbControls.push(function (controlClass) {
         class: "signature-canvas",
         width: 300,
         height: 150,
-        style: "border: 1px solid #000; touch-action: none;",
+        style: `
+          border: 1px solid #000; 
+          touch-action: none; 
+          display: block;
+        `,
       });
+
       const clearBtn = this.markup("button", "Clear", {
         type: "button",
         class: "btn btn-sm btn-warning clear-signature",
+        style: `
+          position: absolute; 
+          bottom: 5px; 
+          right: 5px; 
+          z-index: 2;
+        `,
       });
-      this.dom = this.markup("div", [canvas, clearBtn], { class: "signature-wrapper" });
+
+      const wrapper = this.markup("div", [canvas, clearBtn], {
+        class: "signature-wrapper",
+        style: "position: relative; display: inline-block; margin-top: 5px;",
+      });
+
+      this.dom = this.markup("div", [wrapper], {
+        class: "form-group",
+      });
+
       return this.dom;
     }
 
